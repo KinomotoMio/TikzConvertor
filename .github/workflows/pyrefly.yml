@@ -1,0 +1,22 @@
+name: Pyrefly
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  pyrefly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: uv sync --frozen
+      - name: Install pyrefly
+        run: uv pip install pyrefly
+      - name: Run pyrefly
+        run: uv run pyrefly src
