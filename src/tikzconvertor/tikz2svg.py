@@ -1,6 +1,8 @@
 """TikZ to SVG conversion using LLM."""
 
 import re
+from typing import Any, Callable, cast
+
 import litellm
 
 SYSTEM_PROMPT = '''You are a TikZ to SVG converter. Convert LaTeX TikZ code to equivalent SVG code.
@@ -44,7 +46,8 @@ def tikz2svg(tikz_code: str, model: str, api_key: str) -> str:
     if match:
         tikz_code = match.group(1)
 
-    response = litellm.completion(
+    completion = cast(Callable[..., Any], litellm.completion)
+    response = completion(
         model=model,
         api_key=api_key,
         messages=[
