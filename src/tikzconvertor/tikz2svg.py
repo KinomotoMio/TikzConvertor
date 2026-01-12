@@ -1,9 +1,17 @@
 """TikZ to SVG conversion using LLM."""
 
 import re
+import warnings
 from typing import Any, Callable, cast
 
 import litellm
+
+warnings.filterwarnings(
+    "ignore",
+    message="Pydantic serializer warnings",
+    category=UserWarning,
+    module="pydantic.main",
+)
 
 SYSTEM_PROMPT = '''You are a TikZ to SVG converter. Convert LaTeX TikZ code to equivalent SVG code.
 
