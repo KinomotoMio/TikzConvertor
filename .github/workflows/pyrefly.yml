@@ -19,4 +19,4 @@ jobs:
       - name: Install pyrefly
         run: uv pip install pyrefly
       - name: Run pyrefly
-        run: uv run pyrefly src
+        run: uv run pyrefly check src
