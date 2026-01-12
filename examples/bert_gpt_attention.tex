@@ -1,0 +1,49 @@
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.8cm and 0.8cm,
+        font=\footnotesize,
+        >=Latex,
+        token/.style={circle, draw=gray!60, fill=gray!5, thick, minimum size=0.8cm},
+        target/.style={circle, draw=blue!60, fill=blue!5, thick, minimum size=0.8cm},
+        arrow/.style={-Latex, gray!50},
+        connect/.style={-Latex, thin, gray!40}
+    ]
+        % BERT (Left)
+        %\node[font=\bfseries] at (2.5, 4.5) {BERT: 双向注意力 (Bidirectional)};
+
+        \foreach \i in {1,...,4} {
+            \node[token] (b_in_\i) at (\i*1.2, 0) {$x_\i$};
+            \node[target] (b_out_\i) at (\i*1.2, 3) {$h_\i$};
+        }
+
+        % Connections for BERT (All-to-All)
+        \foreach \i in {1,...,4} {
+            \foreach \j in {1,...,4} {
+                \draw[connect] (b_in_\i) -- (b_out_\j);
+            }
+        }
+
+        % GPT (Right)
+        \begin{scope}[xshift=7cm]
+             %\node[font=\bfseries] at (2.5, 4.5) {GPT: 因果注意力 (Causal)};
+
+            \foreach \i in {1,...,4} {
+                \node[token] (g_in_\i) at (\i*1.2, 0) {$x_\i$};
+                \node[target] (g_out_\i) at (\i*1.2, 3) {$h_\i$};
+            }
+
+            % Connections for GPT (Causal: j depends on i where i <= j)
+            \foreach \i in {1,...,4} {
+                \foreach \j in {\i,...,4} {
+                    \draw[connect] (g_in_\i) -- (g_out_\j);
+                }
+            }
+            \end{scope}
+
+            \node[anchor=north] at (6, -0.5) {\footnotesize $x$：输入词元；$h$：输出隐状态。连线表示注意力（Attention）信息流动方向};
+
+        \end{tikzpicture}
+        \caption{BERT双向注意力与GPT因果注意力机制对比（左：BERT；右：GPT）}
+        \label{fig:bert_gpt_arch}
+\end{figure}

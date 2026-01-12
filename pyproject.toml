@@ -1,0 +1,19 @@
+[project]
+name = "tikzconvertor"
+version = "0.1.0"
+description = "Convert TikZ code to SVG/PNG/HTML without LaTeX installation"
+requires-python = ">=3.9"
+dependencies = [
+    "litellm>=1.0.0",
+    "resvg-py>=0.2.0",
+]
+
+[project.scripts]
+tikzconv = "tikzconvertor.cli:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
